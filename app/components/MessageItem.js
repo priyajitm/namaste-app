@@ -5,14 +5,19 @@ import AppText from "../components/Text";
 import MessageSeparator from "./MessageSeparator";
 import colors from "../config/colors";
 
-function MessageItem({ name, message, image, read, renderRightActions }) {
+function MessageItem({
+  name,
+  message,
+  image,
+  read,
+  time,
+  renderRightActions,
+  onPress,
+}) {
   return (
     <>
       <Swipeable renderRightActions={renderRightActions}>
-        <TouchableHighlight
-          underlayColor={colors.light}
-          onPress={() => console.log("touched")}
-        >
+        <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
           <View style={styles.container}>
             <Image source={image} style={styles.image} />
             <View style={styles.detailsContainer}>
@@ -24,7 +29,7 @@ function MessageItem({ name, message, image, read, renderRightActions }) {
               </AppText>
             </View>
             <View>
-              <AppText style={styles.time}>12:38 PM</AppText>
+              <AppText style={styles.time}>{time}</AppText>
               {!read && <AppText style={styles.notification}>1</AppText>}
             </View>
           </View>

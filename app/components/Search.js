@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, TextInput } from "react-native";
-import AppTextInput from "./TextInput";
 
 function Search({ onSearchChange }) {
   return (

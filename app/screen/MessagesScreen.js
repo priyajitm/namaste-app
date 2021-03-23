@@ -11,63 +11,54 @@ const initialMessages = [
   {
     id: 1,
     name: "John Doe",
-    message: "Interesting ideas are floating, come soon.",
+    messages: [
+      { text: "Hello", time: "10:00 am" },
+      { text: "How are you?", time: "10:00 am" },
+      { text: "Can we meet?", time: "10:00 pm" },
+    ],
     image: { uri: "https://randomuser.me/api/portraits/med/men/97.jpg" },
+    time: "5:02 PM",
     read: false,
   },
   {
     id: 2,
-    name: "Chompa",
-    message:
-      "I will be joining to the next meeting. Do you happen to have the agenda with you?",
+    name: "Tumpa",
+    messages: [
+      { text: "ami r hampi debona", time: "10:00 am" },
+      { text: "final bas", time: "11:00 am" },
+    ],
     image: { uri: "https://randomuser.me/api/portraits/med/women/31.jpg" },
+    time: "3:40 PM",
     read: true,
   },
   {
     id: 3,
     name: "Ranu Mondal",
-    message: "chompa dighir pare mach dhorchi ami",
+    messages: [
+      { text: "ami gaan gai", time: "10:00 am" },
+      { text: "tui sunechis", time: "11:00 am" },
+      { text: "sob e maya", time: "12:00 am" },
+      { text: "sob e maya", time: "12:00 am" },
+      { text: "sob e maya", time: "12:00 am" },
+    ],
     image: { uri: "https://randomuser.me/api/portraits/med/women/12.jpg" },
+    time: "12:38 PM",
     read: true,
   },
   {
     id: 4,
     name: "Ramen Babu",
-    message: "Joto dosh amar ghare",
+    messages: [
+      { text: "ami ramen das", time: "10:00 am" },
+      { text: "khete chai mach", time: "11:00 am" },
+    ],
     image: { uri: "https://randomuser.me/api/portraits/med/men/92.jpg" },
-    read: false,
-  },
-  {
-    id: 5,
-    name: "Sanjay Pathak",
-    message: "amar ek choto jhuli ete ram ravan ache",
-    image: { uri: "https://randomuser.me/api/portraits/med/men/64.jpg" },
-    read: true,
-  },
-  {
-    id: 6,
-    name: "Tumpa Sona",
-    message: "aami ar kauke hampi debona",
-    image: { uri: "https://randomuser.me/api/portraits/med/women/4.jpg" },
-    read: true,
-  },
-  {
-    id: 7,
-    name: "Akshay Mohanti",
-    message: "chabke soja kore debo ekdom",
-    image: { uri: "https://randomuser.me/api/portraits/med/men/15.jpg" },
-    read: true,
-  },
-  {
-    id: 8,
-    name: "Raghu Chandi",
-    message: "ja devi doure jabi sikhbi multimedia",
-    image: { uri: "https://randomuser.me/api/portraits/med/men/63.jpg" },
+    time: "Yesterday",
     read: false,
   },
 ];
 
-function MessagesScreen() {
+function MessagesScreen({ navigation }) {
   const [messages, setMessages] = useState(initialMessages);
   const [showSearch, setShowSearch] = useState(false);
   const [searchField, setSearchField] = useState("");
@@ -80,14 +71,17 @@ function MessagesScreen() {
     setSearchField(text);
   };
 
-  const filteredMessages = initialMessages.filter((message) => {
+  const filteredMessages = messages.filter((message) => {
     return (
       message.name.toLowerCase().includes(searchField.toLowerCase()) ||
-      message.message.toLowerCase().includes(searchField.toLowerCase())
+      message.messages.some(
+        (p) => p.text.toLowerCase() === searchField.toLowerCase()
+      )
     );
   });
 
   const deleteMessage = (message) => {
+    console.log(message);
     setMessages(messages.filter((m) => m.id !== message.id));
   };
 
@@ -106,12 +100,14 @@ function MessagesScreen() {
         renderItem={({ item }) => (
           <MessageItem
             name={item.name}
-            message={item.message}
+            message={item.messages[item.messages.length - 1].text}
             image={item.image}
             read={item.read}
+            time={item.messages[item.messages.length - 1].time}
             renderRightActions={() => (
               <MessageDelete onPress={() => deleteMessage(item)} />
             )}
+            onPress={() => navigation.navigate("Chats", item)}
           />
         )}
         ListHeaderComponent={

@@ -4,7 +4,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppText from "../components/Text";
 import colors from "../config/colors";
 
-function Header({ leftIconName, headerName, rightIconName, handleLeftIcon }) {
+function Header({
+  leftIconName,
+  headerName,
+  rightIconName,
+  handleLeftIcon,
+  handleRightIcon,
+  name,
+  image,
+}) {
   return (
     <>
       <View style={styles.header}>
@@ -14,7 +22,11 @@ function Header({ leftIconName, headerName, rightIconName, handleLeftIcon }) {
           size={30}
         />
         <AppText style={styles.headerText}>{headerName}</AppText>
-        <MaterialCommunityIcons name={rightIconName} size={30} />
+        <MaterialCommunityIcons
+          name={rightIconName}
+          size={30}
+          onPress={handleRightIcon}
+        />
       </View>
       <View style={styles.headerBorder} />
     </>
