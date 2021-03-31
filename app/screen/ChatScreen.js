@@ -18,31 +18,8 @@ import ChatModal from "../components/ChatModal";
 import ChatModalOption from "../components/ChatModalOption";
 import ModalOptionSeparator from "../components/ModalOptionSeparator";
 
-const user = {
-  name: "Akshay Mohanti corporate number",
-  image: { uri: "https://randomuser.me/api/portraits/med/men/15.jpg" },
-};
-
-// const data = [
-//   {
-//     id: 1,
-//     message: "chabke soja kore debo ekdom",
-//     time: "2:04 PM",
-//     type: "incoming",
-//   },
-//   {
-//     id: 2,
-//     message: "sutiye lal kore debo",
-//     time: "12:24 PM",
-//     type: "incoming",
-//   },
-// ];
-
-function ChatScreen({ route }) {
+function ChatScreen({ route, navigation }) {
   const chats = route.params;
-  // console.log(chats);
-
-  // chats.messages.map((message) => console.log(message.text));
 
   const [typing, setTyping] = useState(false);
   const [message, setMessage] = useState("");
@@ -79,6 +56,10 @@ function ChatScreen({ route }) {
     setHideFooter(!hideFooter);
   };
 
+  const showUserProfile = () => {
+    navigation.navigate("UserProfile", chats); // work in progress
+  };
+
   return (
     <Screen style={{ backgroundColor: "#128C7E" }}>
       <ChatHeader
@@ -87,6 +68,7 @@ function ChatScreen({ route }) {
         rightIcon2Name="phone"
         name={chats.name}
         image={chats.image}
+        showUserProfile={showUserProfile}
       />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}

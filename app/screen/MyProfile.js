@@ -13,13 +13,7 @@ import FormField from "../components/FormField";
 import ImageInput from "../components/ImageInput";
 import SubmitButton from "../components/SubmitButton";
 import { useRef } from "react";
-
-const userData = {
-  name: "John Doe",
-  image: { uri: "https://randomuser.me/api/portraits/men/51.jpg" },
-  status:
-    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
-};
+import { appAuth, appFirestore, userData } from "../config/firebase";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(1).max(8).label("Display Name"),
@@ -31,16 +25,33 @@ const verifyData = (data) => {
 };
 
 function MyProfile({ self }) {
+  const user = appAuth.currentUser.uid;
+  const userData = async (uid) => {
+    const doc = await appFirestore.collection("users").doc(uid).get();
+
+    if (doc) {
+      setName(doc.data().name);
+      setStatus(doc.data().status);
+      setusername(doc.data().username);
+      setUserImage(doc.data().profilePic);
+    }
+  };
+
+  if (user) {
+    userData(user);
+  }
   const [isEdit, setEdit] = useState(false);
-  const [name, setName] = useState(userData.name);
-  const [status, setStatus] = useState(userData.status);
-  const [userImage, setUserImage] = useState(userData.image.uri);
+  const [name, setName] = useState();
+  const [status, setStatus] = useState();
+  const [userImage, setUserImage] = useState();
+  const [username, setusername] = useState();
 
   const handlePress = () => {
     setEdit(!isEdit);
   };
 
   const rightIconName = !isEdit ? "file-edit-outline" : "close";
+
   return (
     <Screen>
       <Header
@@ -53,13 +64,13 @@ function MyProfile({ self }) {
         {!isEdit ? (
           <>
             <View style={{ alignItems: "center" }}>
-              <Image style={styles.image} source={userData.image} />
+              <Image style={styles.image} source={{ uri: userImage }} />
 
-              <Text style={styles.name}>{userData.name}</Text>
-              <Text style={styles.status}>{userData.status}</Text>
+              <Text style={styles.name}>{name}</Text>
+              <Text style={styles.status}>{status}</Text>
             </View>
             <View style={styles.optionsContainer}>
-              <Text style={styles.options}>Username:</Text>
+              <Text style={styles.options}>Username: {username}</Text>
               <Text style={styles.options}>Namaste Web</Text>
               <Text style={styles.options}>Blocked Users</Text>
               <Text style={styles.options}>Delete Account</Text>

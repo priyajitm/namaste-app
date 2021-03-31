@@ -12,6 +12,7 @@ function Header({
   handleLeftIcon,
   name,
   image,
+  showUserProfile,
 }) {
   return (
     <>
@@ -22,7 +23,10 @@ function Header({
           size={30}
           color="white"
         />
-        <View style={styles.userInfo}>
+        <View
+          style={styles.userInfo}
+          onStartShouldSetResponder={showUserProfile}
+        >
           <Image source={image} style={styles.image} />
           <AppText numberOfLines={1} style={{ color: "white" }}>
             {name}

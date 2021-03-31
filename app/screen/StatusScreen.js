@@ -19,7 +19,7 @@ const data = [
     location: "location",
   },
   {
-    id: 1,
+    id: 2,
     userName: "Jane Doe",
     profileImage: { uri: "https://randomuser.me/api/portraits/women/31.jpg" },
     statusImage: [
@@ -41,6 +41,7 @@ function StatusScreen(props) {
       <ScrollView>
         {statuses.map((item) => (
           <ImageStatus
+            key={item.id}
             profileImage={item.profileImage}
             name={item.userName}
             location={item.location}

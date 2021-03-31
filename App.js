@@ -1,29 +1,26 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import ChatScreen from "./app/screen/ChatScreen";
-import MessagesScreen from "./app/screen/MessagesScreen";
-import WelcomeScreen from "./app/screen/WelcomeScreen";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { TextInput } from "react-native-gesture-handler";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+
 import { HoldMenuProvider } from "react-native-hold-menu";
-import Test from "./app/Test.js";
-import UserProfile from "./app/screen/UserProfile";
-import MyProfile from "./app/screen/MyProfile";
-import StatusScreen from "./app/screen/StatusScreen";
-import AddProfileDetailsScreen from "./app/screen/AddProfileDetailsScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
+import { appAuth } from "./app/config/firebase";
 
 export default function App() {
+  const [isAuthenticated, setAuthenticated] = useState(true);
+
+  // useEffect(() => {
+  //   const user = appAuth.currentUser;
+  //   setAuthenticated(true);
+  // });
+
   return (
     <HoldMenuProvider theme="light">
       <NavigationContainer>
-        <AppNavigator />
+        {!isAuthenticated ? <AuthNavigator /> : <AppNavigator />}
       </NavigationContainer>
       {/* <WelcomeScreen /> */}
     </HoldMenuProvider>

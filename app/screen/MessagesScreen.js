@@ -17,7 +17,8 @@ const initialMessages = [
       { text: "Can we meet?", time: "10:00 pm" },
     ],
     image: { uri: "https://randomuser.me/api/portraits/med/men/97.jpg" },
-    time: "5:02 PM",
+    status: "this is johns status",
+    username: "johndoe1",
     read: false,
   },
   {
@@ -28,7 +29,8 @@ const initialMessages = [
       { text: "final bas", time: "11:00 am" },
     ],
     image: { uri: "https://randomuser.me/api/portraits/med/women/31.jpg" },
-    time: "3:40 PM",
+    status: "this is tumpas status",
+    username: "tumpa_sona",
     read: true,
   },
   {
@@ -42,7 +44,8 @@ const initialMessages = [
       { text: "sob e maya", time: "12:00 am" },
     ],
     image: { uri: "https://randomuser.me/api/portraits/med/women/12.jpg" },
-    time: "12:38 PM",
+    status: "this is ranus status",
+    username: "ranu_mondal",
     read: true,
   },
   {
@@ -53,7 +56,8 @@ const initialMessages = [
       { text: "khete chai mach", time: "11:00 am" },
     ],
     image: { uri: "https://randomuser.me/api/portraits/med/men/92.jpg" },
-    time: "Yesterday",
+    status: "this is ramens status",
+    username: "ramen11",
     read: false,
   },
 ];

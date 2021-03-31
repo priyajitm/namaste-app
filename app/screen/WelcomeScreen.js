@@ -1,92 +1,63 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Image, KeyboardAvoidingView } from "react-native";
-import * as Yup from "yup";
+import React, { useRef, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  TextInput,
+  Text,
+} from "react-native";
+
+import Button from "../components/Button";
 
 import Form from "../components/Form";
 import FormField from "../components/FormField";
 import SubmitButton from "../components/SubmitButton";
+import AppTextInput from "../components/TextInput";
 
 function WelcomeScreen({ navigation }) {
-  const validationSchema = Yup.object().shape({
-    username: Yup.string().required().min(1).max(8).label("Username"),
-    email: Yup.string().required().email().label("Email"),
-  });
-
-  const [visible, setVisible] = useState(true);
-
-  const verifyData = (data) => {
-    console.log(data);
-    setVisible(false);
-  };
-
-  const submitLogin = (data) => {
-    console.log(data);
-    navigation.navigate("ProfileAdd");
-  };
-
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../assets/namaste.png")} />
-      <KeyboardAvoidingView>
-        {visible ? (
-          <Form
-            initialValues={{ username: "", name: "", email: "" }}
-            validationSchema={validationSchema}
-            onSubmit={(values) => verifyData(values)}
-          >
-            <FormField
-              icon="at"
-              placeholder="Public_Username"
-              width="90%"
-              name="username"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-
-            <FormField
-              icon="email"
-              placeholder="Email"
-              width="90%"
-              name="email"
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="email-address"
-              textContentType="emailAddress"
-            />
-            <SubmitButton title="Sign In" width="90%" />
-          </Form>
-        ) : (
-          <Form
-            initialValues={{ otp: "" }}
-            onSubmit={(values) => submitLogin(values)}
-          >
-            <FormField
-              icon="onepassword"
-              placeholder="One Time Password"
-              width="90%"
-              name="otp"
-              keyboardType="number-pad"
-            />
-            <SubmitButton title="Submit" width="90%" />
-          </Form>
-        )}
-      </KeyboardAvoidingView>
+      <View
+        style={{
+          justifyContent: "space-around",
+          alignItems: "center",
+          flex: 1,
+        }}
+      >
+        <Text style={styles.subTitle}>
+          Namaste is a cross platform mobile messaging with friends all over the
+          world
+        </Text>
+        <Button title="Terms of Service" color="black" />
+        <Button title="Login" onPress={() => navigation.navigate("Login")} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f4a261",
+    backgroundColor: "#fff",
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
   },
   logo: {
     width: 200,
     height: 200,
-    position: "absolute",
-    top: 60,
+    marginTop: 50,
+  },
+  title: {
+    fontSize: 40,
+    textAlign: "center",
+    margin: 20,
+  },
+  subTitle: {
+    fontSize: 20,
+    textAlign: "center",
+    marginHorizontal: 50,
+    lineHeight: 30,
   },
 });
 
